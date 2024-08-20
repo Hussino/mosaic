@@ -37,6 +37,9 @@ def create_kot_doc(
     production,
 ):
     pos_invoice = frappe.get_doc("POS Invoice", invoice_id)
+    is_aggregator = 0
+    if pos_invoice.order_type == "Aggregators":
+        is_aggregator = 1
     kot_doc = frappe.get_doc(
         {
             "doctype": "URY KOT",
@@ -48,6 +51,8 @@ def create_kot_doc(
             "type": kot_type,
             "naming_series": kot_naming_series,
             "production": production,
+            "aggregator_id":pos_invoice.custom_aggregator_id,
+            "is_aggregator":is_aggregator
         }
     )
 

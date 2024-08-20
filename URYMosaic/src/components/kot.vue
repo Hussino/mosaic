@@ -87,6 +87,14 @@
                       >( {{ kot.user }} )</span
                     ></span
                   ><br />
+                  <span v-if="kot.is_aggregator" class="text-sm font-medium text-[#6B7280]">Aggregator</span>
+                  <span v-if="kot.is_aggregator" class="text-black-500 ml-2 font-semibold"
+                    >{{ kot.customer_name }}
+                  </span><br v-if="kot.is_aggregator" />
+                  <span v-if="kot.is_aggregator" class="text-sm font-medium text-[#6B7280]">Aggregator ID</span>
+                  <span v-if="kot.is_aggregator" class="text-black-500 ml-2 font-semibold"
+                    >{{ kot.aggregator_id }}
+                  </span><br v-if="kot.is_aggregator"/>
                   <span class="text-sm font-medium text-[#6B7280]">Order</span>
                   <span class="text-black-500 ml-2 font-semibold"
                     >{{ kot.invoice.slice(-4) }}
