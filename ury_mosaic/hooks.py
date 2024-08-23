@@ -80,7 +80,11 @@ fixtures = [
 						"POS Profile-custom_cl",
 						"POS Profile-custom_notify_kot_delay",
 						"POS Profile-custom_recipients",
-                        "URY Printer Settings-custom_block_takeaway_kot"
+                        "URY Printer Settings-custom_block_takeaway_kot",
+						"POS Opening Entry-custom_ury_last_invoice",
+						"POS Opening Entry-custom_ury_last_aggregator_invoice",
+						"POS Profile-custom_reset_order_number_daily",
+						"POS Invoice-custom_ury_order_number"
 					}
 			]
 		]
@@ -146,13 +150,15 @@ fixtures = [
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"POS Opening Entry": {
+        "before_insert":"ury_mosaic.ury_mosaic.api.ury_kot_order_number.set_last_invoice_in_pos_open",
+    },
+	"POS Invoice": {
+        "after_insert":"ury_mosaic.ury_mosaic.api.ury_kot_order_number.set_order_number",
+        
+    },
+}
 
 # Scheduled Tasks
 # ---------------

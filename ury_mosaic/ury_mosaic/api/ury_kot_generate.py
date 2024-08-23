@@ -37,6 +37,7 @@ def create_kot_doc(
     production,
 ):
     pos_invoice = frappe.get_doc("POS Invoice", invoice_id)
+    order_number = pos_invoice.custom_ury_order_number
     is_aggregator = 0
     if pos_invoice.order_type == "Aggregators":
         is_aggregator = 1
@@ -52,7 +53,8 @@ def create_kot_doc(
             "naming_series": kot_naming_series,
             "production": production,
             "aggregator_id":pos_invoice.custom_aggregator_id,
-            "is_aggregator":is_aggregator
+            "is_aggregator":is_aggregator,
+            "order_no":order_number
         }
     )
 
@@ -230,6 +232,7 @@ def create_cancel_kot_doc(
     production,
 ):
     pos_invoice = frappe.get_doc("POS Invoice", invoice_id)
+    order_number = pos_invoice.custom_ury_order_number  
     is_aggregator = 0
     if pos_invoice.order_type == "Aggregators":
         is_aggregator = 1
@@ -271,7 +274,8 @@ def create_cancel_kot_doc(
             "pos_profile": pos_profile_id,
             "comments": comments,
             "production": production,
-            "is_aggregator":is_aggregator
+            "is_aggregator":is_aggregator,
+            "order_no":order_number
         }
     )
 

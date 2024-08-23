@@ -97,7 +97,8 @@
                   </span><br v-if="kot.is_aggregator"/>
                   <span class="text-sm font-medium text-[#6B7280]">Order</span>
                   <span class="text-black-500 ml-2 font-semibold"
-                    >{{ kot.invoice.slice(-4) }}
+                    >{{ this.daily_order_number ? kot.order_no : kot.invoice.slice(-4) }}
+                    
                   </span>
                   <span
                     class="text-black-500 ml-2 font-semibold"
@@ -239,6 +240,7 @@ export default {
       audio_alert: 0,
       isOnline: navigator.onLine,
       statusMessage: "",
+      daily_order_number:0
     };
   },
   methods: {
@@ -272,6 +274,7 @@ export default {
               this.branch = result.message.Branch;
               this.kot_alert_time = result.message.kot_alert_time;
               this.audio_alert = result.message.audio_alert;
+              this.daily_order_number = result.message.daily_order_number;
               this.kot_channel = `kot_update_${this.branch}_${this.production}`;
               this.kot = result.message.KOT;
               this.updateQtyColorTable();

@@ -25,6 +25,9 @@ def kot_list():
     kot_alert_time = frappe.db.get_value(
         "POS Profile", {"branch": branch}, "custom_kot_warning_time"
     )
+    daily_order_number = frappe.db.get_value(
+        "POS Profile", {"branch": branch}, "custom_reset_order_number_daily"
+    )
     three_hours_ago = frappe.utils.add_to_date(today, hours=-3)
     audio_alert = frappe.db.get_value(
         "POS Profile", {"branch": branch}, "custom_kot_alert"
@@ -60,6 +63,7 @@ def kot_list():
         "KOT": KOT,
         "Branch": branch,
         "kot_alert_time": kot_alert_time,
-        "audio_alert": audio_alert
+        "audio_alert": audio_alert,
+        "daily_order_number":daily_order_number
     }
 
