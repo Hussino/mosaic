@@ -229,6 +229,10 @@ def create_cancel_kot_doc(
     invoiceItems,
     production,
 ):
+    pos_invoice = frappe.get_doc("POS Invoice", invoice_id)
+    is_aggregator = 0
+    if pos_invoice.order_type == "Aggregators":
+        is_aggregator = 1
     kot_list = frappe.db.get_list(
         "URY KOT",
         filters={
@@ -267,6 +271,7 @@ def create_cancel_kot_doc(
             "pos_profile": pos_profile_id,
             "comments": comments,
             "production": production,
+            "is_aggregator":is_aggregator
         }
     )
 
