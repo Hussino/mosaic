@@ -2,12 +2,19 @@ import json
 
 import frappe
 from ury.ury_pos.api import getBranch
+from frappe.utils import get_datetime
 
 
 # Function to set order status in a KOT document
 @frappe.whitelist()
 def serve_kot(name, time):
+    current_time = get_datetime()
+    creation_time = frappe.db.get_value("URY KOT",name,"creation")
+
+    production_time = current_time - creation_time
+    production_time_minutes = production_time.total_seconds() / 60
     frappe.db.set_value("URY KOT", name, "start_time_serv", time)
+    frappe.db.set_value("URY KOT",name,"production_time",production_time_minutes)
     frappe.db.set_value("URY KOT", name, "order_status", "Served")
 
 

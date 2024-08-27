@@ -21,6 +21,7 @@
   "production",
   "section_break_yxcxo",
   "start_time_prep",
+  "production_time",
   "column_break_9rksu",
   "start_time_serv",
   "section_break_ubzfc",
@@ -245,12 +246,19 @@
    "options": "URY KOT",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "production_time",
+   "fieldtype": "Data",
+   "label": "Total Production Time",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-23 15:59:29.919868",
+ "modified": "2024-08-26 12:28:58.664903",
  "modified_by": "Administrator",
  "module": "URY Mosaic",
  "name": "URY KOT",
