@@ -12,7 +12,10 @@
   "item_name",
   "quantity",
   "cancelled_qty",
-  "comments"
+  "comments",
+  "course",
+  "serve_priority",
+  "indicate_course"
  ],
  "fields": [
   {
@@ -46,12 +49,34 @@
    "fieldname": "comments",
    "fieldtype": "Data",
    "label": "Comments"
+  },
+  {
+   "fieldname": "course",
+   "fieldtype": "Link",
+   "label": "Course",
+   "options": "URY Menu Course",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "course.custom_serving_priority",
+   "fieldname": "serve_priority",
+   "fieldtype": "Int",
+   "label": "Serve Priority",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fetch_from": "course.custom_indicate_in_kds",
+   "fieldname": "indicate_course",
+   "fieldtype": "Check",
+   "label": "Indicate Course",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-27 12:20:47.570767",
+ "modified": "2024-08-28 16:23:35.778511",
  "modified_by": "Administrator",
  "module": "URY Mosaic",
  "name": "URY KOT Items",

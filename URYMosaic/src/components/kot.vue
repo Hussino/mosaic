@@ -130,7 +130,7 @@
               <div class="mt-5">
                 <div
                   class="font-semibold justify-between items-center mt-2"
-                  v-for="kotitem in kot.kot_items"
+                  v-for="kotitem in sortedKotItems(kot)"
                   :key="kotitem.name"
                 >
                   <div
@@ -147,7 +147,8 @@
                     <div>
                       <span class="ml-2 text-black-100">{{
                         kotitem.item_name
-                      }}</span
+                      }}<span v-show="kotitem.indicate_course" class="text-sm text-gray-500 ml-1"> ( {{kotitem.course}} )</span>
+                      </span
                       ><br />
                       <span
                         class="ml-2 text-black-100"
@@ -218,7 +219,38 @@ let host = window.location.hostname;
 let port = window.location.port;
 let protocol = port ? "http" : "https";
 let url = `${protocol}://${host}:${port}`;
-let socket = io(url);
+window.globalSiteName = '';
+let socket; // Declare the socket variable globally
+
+async function fetchAndSetSiteName() {
+    try {
+        const response = await fetch('/api/method/ury_mosaic.ury_mosaic.api.ury_kot_display.get_site_name', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        window.globalSiteName = data.message.site_name;
+        // console.log('Global Site Name:', window.globalSiteName);
+    } catch (error) {
+        console.error('Failed to fetch site name:', error);
+    }
+}
+
+async function initializeSocket() {
+    await fetchAndSetSiteName();
+    if (window.globalSiteName) {
+        let site = window.globalSiteName;
+        let site_url = `${url}/${site}`;
+        socket = io(site_url);
+    } else {
+        console.error('Site name is not set. Socket cannot be initialized.');
+    }
+}
+
+initializeSocket(); // Initialize the socket after fetching the site name
+
 
 const frappe = new FrappeApp(url);
 export default {
@@ -292,7 +324,7 @@ export default {
       });
     },
     rotateCard(kot) {
-      this.masonryLoading();
+      this.masonryLoading();ury_mosaic/fixtures/custom_field.json
       kot.isRotated = !kot.isRotated;
     },
     confirmOrder(kot) {
@@ -561,7 +593,13 @@ export default {
     window.removeEventListener("offline", this.handleOffline);
     document.removeEventListener("click", this.hideAudioAlertMessage);
   },
-  computed: {},
+  computed: {
+    sortedKotItems() {
+      return (kot) => {
+        return kot.kot_items.sort((a, b) => a.serve_priority - b.serve_priority);
+      };
+    },
+  },
 };
 </script>
 <style>

@@ -84,7 +84,9 @@ fixtures = [
 						"POS Opening Entry-custom_ury_last_invoice",
 						"POS Opening Entry-custom_ury_last_aggregator_invoice",
 						"POS Profile-custom_reset_order_number_daily",
-						"POS Invoice-custom_ury_order_number"
+						"POS Invoice-custom_ury_order_number",
+                        "URY Menu Course-custom_serving_priority",
+                        "URY Menu Course-custom_indicate_in_kds"
 					}
 			]
 		]
@@ -158,6 +160,9 @@ doc_events = {
         "after_insert":"ury_mosaic.ury_mosaic.api.ury_kot_order_number.set_order_number",
         
     },
+    "URY Menu Course": {
+		"validate": "ury_mosaic.ury_mosaic.api.ury_menu_course_validation.validate_priority",
+	}
 }
 
 # Scheduled Tasks

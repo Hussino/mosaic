@@ -1,6 +1,7 @@
 import json
 
 import frappe
+from ury.ury_pos.api import getBranch
 
 
 # Load JSON data or return as is if it's already a Python dictionary
@@ -57,8 +58,17 @@ def create_kot_doc(
             "order_no":order_number
         }
     )
+    branch = getBranch()
+    if restaurant_table:
+        room = frappe.db.get_value("URY Table", restaurant_table, "restaurant_room")
+        restaurant = frappe.db.get_value("URY Table", restaurant_table, "restaurant")
+        menu = frappe.db.get_value("Menu for Room", {"room": room,"parent":restaurant}, "menu")
+        
+    else:
+        menu = frappe.db.get_value("URY Restaurant", {"branch": branch}, "active_menu")
 
     for item in items:
+        course = frappe.db.get_value("URY Menu Item", {"item": item["item_code"],"parent":menu}, "course")
         kot_doc.append(
             "kot_items",
             {
@@ -66,6 +76,7 @@ def create_kot_doc(
                 "item_name": item["item_name"],
                 "quantity": item["qty"],
                 "comments": item["comments"],
+                "course":course
             },
         )
     kot_doc.insert()
@@ -279,7 +290,16 @@ def create_cancel_kot_doc(
         }
     )
 
+    branch = getBranch()
+    if restaurant_table:
+        room = frappe.db.get_value("URY Table", restaurant_table, "restaurant_room")
+        restaurant = frappe.db.get_value("URY Table", restaurant_table, "restaurant")
+        menu = frappe.db.get_value("Menu for Room", {"room": room,"parent":restaurant}, "menu")
+        
+    else:
+        menu = frappe.db.get_value("URY Restaurant", {"branch": branch}, "active_menu")
     for cancelItem in cancel_items:
+        course = frappe.db.get_value("URY Menu Item", {"item": cancelItem["item_code"],"parent":menu}, "course")
         for item in invoiceItems:
             if cancelItem["item_code"] == item["item_code"]:
                 kot_cancel_doc.append(
@@ -290,6 +310,7 @@ def create_cancel_kot_doc(
                         "cancelled_qty": abs(int(cancelItem["qty"])),
                         "quantity": item["qty"],
                         "comments": cancelItem["comments"],
+                        "course":course
                     },
                 )
 
