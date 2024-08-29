@@ -324,7 +324,7 @@ export default {
       });
     },
     rotateCard(kot) {
-      this.masonryLoading();ury_mosaic/fixtures/custom_field.json
+      this.masonryLoading();
       kot.isRotated = !kot.isRotated;
     },
     confirmOrder(kot) {
