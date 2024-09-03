@@ -5,7 +5,7 @@ import App from "./App.vue";
 import router from './router';
 import resourceManager from "../../../doppio/libs/resourceManager";
 import call from "../../../doppio/libs/controllers/call";
-import socket from "../../../doppio/libs/controllers/socket";
+// import socket from "../../../doppio/libs/controllers/socket";
 import Auth from "../../../doppio/libs/controllers/auth";
 
 const app = createApp(App);
@@ -19,7 +19,7 @@ app.use(resourceManager);
 // components can inject this
 app.provide("$auth", auth);
 app.provide("$call", call);
-app.provide("$socket", socket);
+// app.provide("$socket", socket);
 
 
 // Configure route gaurds

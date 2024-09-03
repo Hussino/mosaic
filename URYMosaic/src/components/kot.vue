@@ -217,10 +217,10 @@ import io from "socket.io-client";
 
 let host = window.location.hostname;
 let port = window.location.port;
-let protocol = port ? "http" : "https";
-let url = `${protocol}://${host}:${port}`;
+let protocol = window.location.protocol;
+let url = port ? `${protocol}//${host}:${port}` : `${protocol}//${host}`;
 window.globalSiteName = '';
-let socket; // Declare the socket variable globally
+let socket; 
 
 async function fetchAndSetSiteName() {
     try {
@@ -243,7 +243,14 @@ async function initializeSocket() {
     if (window.globalSiteName) {
         let site = window.globalSiteName;
         let site_url = `${url}/${site}`;
-        socket = io(site_url);
+        socket = io(site_url,{ withCredentials: true });
+        console.log("socket == >",socket)
+        socket.on('connect_error', (err) => {
+            console.error("Socket connection error:", err);
+        }); 
+        socket.on('connect', () => {
+            console.log('Socket connected:', socket.connected);
+        });
     } else {
         console.error('Site name is not set. Socket cannot be initialized.');
     }
