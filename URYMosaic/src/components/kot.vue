@@ -384,7 +384,7 @@ export default {
           }
         )
         .then((result) => {
-          console.log("call backed ", result);
+          // console.log("call backed ", result);
         })
         .catch((error) => console.error(error));
     },
@@ -585,6 +585,13 @@ export default {
             this.masonryLoading();
             this.updateQtyColorTable();
             this.updateTimeRemaining();
+            setTimeout(()=>{
+              if (doc.kot.type === "Cancelled"){
+                this.fetchKOT().then(() => {
+                  this.masonryLoading();
+                });
+              }
+            },1500)
             localStorage.setItem("kot_time", doc.kot.time);
           });
         });
