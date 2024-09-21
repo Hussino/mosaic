@@ -51,23 +51,28 @@ def set_order_number(doc, event):
         # invoice = frappe.get_last_doc(
         #     "POS Invoice", filters={"pos_profile": doc.pos_profile}
         # )
-        invoice = frappe.get_last_doc(
-            "POS Invoice", filters={"pos_profile": doc.pos_profile,"order_type": ["!=", "Aggregators"]}
-        )
+
+        if doc.order_type == "Aggregators":
+            aggregator_invoice =frappe.get_last_doc(
+                "POS Invoice", filters={"pos_profile": doc.pos_profile,"order_type": "Aggregators"}
+            )
+            aggregator_invoice_number = int(aggregator_invoice.name[-5:])
+            aggregator_last_order_number = aggregator_invoice_number - 1
+            frappe.db.set_value(
+                "POS Opening Entry", pos_open_name, "custom_ury_last_aggregator_invoice", aggregator_last_order_number
+            )
+        else:
+            invoice = frappe.get_last_doc(
+                "POS Invoice", filters={"pos_profile": doc.pos_profile,"order_type": ["!=", "Aggregators"]}
+            )
+
+            invoice_number = int(invoice.name[-5:])
+            last_order_number = invoice_number - 1
+
+            frappe.db.set_value(
+                "POS Opening Entry", pos_open_name, "custom_ury_last_invoice", last_order_number
+            )
         
-        invoice_number = int(invoice.name[-5:])
-        last_order_number = invoice_number - 1
-        frappe.db.set_value(
-            "POS Opening Entry", pos_open_name, "custom_ury_last_invoice", last_order_number
-        )
-        aggregator_invoice =frappe.get_last_doc(
-            "POS Invoice", filters={"pos_profile": doc.pos_profile,"order_type": "Aggregators"}
-        )
-        aggregator_invoice_number = int(aggregator_invoice.name[-5:])
-        aggregator_last_order_number = aggregator_invoice_number - 1
-        frappe.db.set_value(
-            "POS Opening Entry", pos_open_name, "custom_ury_last_aggregator_invoice", aggregator_last_order_number
-        )
         default_value = "AGR - 1" if doc.order_type == "Aggregators" else "1"
         frappe.db.set_value(
             "POS Invoice",
