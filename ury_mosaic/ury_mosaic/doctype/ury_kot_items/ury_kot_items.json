@@ -10,11 +10,13 @@
  "field_order": [
   "item",
   "item_name",
+  "preparation_time",
   "quantity",
   "cancelled_qty",
   "comments",
   "course",
   "serve_priority",
+  "parallel_preparation",
   "indicate_course"
  ],
  "fields": [
@@ -71,12 +73,25 @@
    "fieldtype": "Check",
    "label": "Indicate Course",
    "read_only": 1
+  },
+  {
+   "fetch_from": "item.custom_preparation_time",
+   "fieldname": "preparation_time",
+   "fieldtype": "Int",
+   "label": "Preparation Time"
+  },
+  {
+   "default": "0",
+   "fetch_from": "item.custom_parallel_preparation",
+   "fieldname": "parallel_preparation",
+   "fieldtype": "Check",
+   "label": "Parallel Preparation"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-08-28 16:23:35.778511",
+ "modified": "2024-11-23 22:34:32.810944",
  "modified_by": "Administrator",
  "module": "URY Mosaic",
  "name": "URY KOT Items",

@@ -24,6 +24,7 @@
   "production_time",
   "column_break_9rksu",
   "start_time_serv",
+  "preparation_time",
   "section_break_ubzfc",
   "kot_items",
   "section_break_zpwun",
@@ -253,12 +254,17 @@
    "fieldtype": "Data",
    "label": "Total Production Time",
    "read_only": 1
+  },
+  {
+   "fieldname": "preparation_time",
+   "fieldtype": "Int",
+   "label": "Preparation Time"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-26 12:28:58.664903",
+ "modified": "2024-11-23 23:00:23.928650",
  "modified_by": "Administrator",
  "module": "URY Mosaic",
  "name": "URY KOT",
