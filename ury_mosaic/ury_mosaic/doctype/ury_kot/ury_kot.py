@@ -15,6 +15,7 @@ class URYKOT(Document):
 
     def before_submit(self):
         self.userSetting()
+        self.setPreparationTime()
 
     # Function for printing multiple KOTs.
     def multi_print_kot(self):
@@ -103,3 +104,14 @@ class URYKOT(Document):
     def userSetting(self):
         userDoc = frappe.get_doc("User", self.owner)
         self.user = userDoc.full_name
+
+    def setPreparationTime(self):
+        items = self.get("kot_items")
+        max_time = 0
+        for item in items:
+
+            total_item_time = item.preparation_time if item.parallel_preparation else item.preparation_time * item.quantity
+
+            max_time = max(max_time, total_item_time)
+        
+        self.preparation_time = max_time

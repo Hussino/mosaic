@@ -310,6 +310,7 @@ export default {
           this.call
             .get("ury_mosaic.ury_mosaic.api.ury_kot_display.kot_list", {})
             .then((result) => {
+              // console.log(result.message.KOT)
               this.branch = result.message.Branch;
               this.kot_alert_time = result.message.kot_alert_time;
               this.audio_alert = result.message.audio_alert;
@@ -468,13 +469,15 @@ export default {
           parseInt(timeRemaining[0]) * 60 + parseInt(timeRemaining[1]);
 
         if (
-          minutes === this.kot_alert_time &&
+          // minutes === this.kot_alert_time &&
+          minutes === kot.preparation_time &&
           kot.type !== "Cancelled" &&
           kot.type !== "Partially cancelled"
         ) {
           this.orderDelayNotify(kot);
         }
-        if (minutes >= this.kot_alert_time) {
+        // if (minutes >= this.kot_alert_time) {
+          if (minutes >= kot.preparation_time) {
           kot.timecolor = "text-[#DC0000]";
         } else {
           kot.timecolor = "text-black";
