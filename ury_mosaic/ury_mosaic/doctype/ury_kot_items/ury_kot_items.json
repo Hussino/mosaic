@@ -75,14 +75,15 @@
    "read_only": 1
   },
   {
-   "fetch_from": "item.custom_preparation_time",
+   "fetch_from": ".custom_preparation_time",
    "fieldname": "preparation_time",
    "fieldtype": "Int",
    "label": "Preparation Time"
   },
   {
    "default": "0",
-   "fetch_from": "item.custom_parallel_preparation",
+   "fetch_from": ".custom_parallel_preparation",
+   "fetch_if_empty": 1,
    "fieldname": "parallel_preparation",
    "fieldtype": "Check",
    "label": "Parallel Preparation"
@@ -91,7 +92,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-11-23 22:34:32.810944",
+ "modified": "2024-11-26 00:56:12.502494",
  "modified_by": "Administrator",
  "module": "URY Mosaic",
  "name": "URY KOT Items",
