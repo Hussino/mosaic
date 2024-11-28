@@ -20,6 +20,8 @@ def create_order_items(items):
             "qty": item["qty"],
             "item_name": item["item_name"],
             "comments": item.get("comment", item.get("comments", "")),
+            "preparation_time": item.get("preparation_time"),
+            "parallel_preparation": item.get("parallel_preparation"),
         }
         order_items.append(order_item)
     return order_items
@@ -76,7 +78,9 @@ def create_kot_doc(
                 "item_name": item["item_name"],
                 "quantity": item["qty"],
                 "comments": item["comments"],
-                "course":course
+                "course":course,
+                "preparation_time":item["preparation_time"],
+                "parallel_preparation":item["parallel_preparation"],
             },
         )
     kot_doc.insert()
