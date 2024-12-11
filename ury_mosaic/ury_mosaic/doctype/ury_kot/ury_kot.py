@@ -109,8 +109,11 @@ class URYKOT(Document):
         items = self.get("kot_items")
         max_time = 0
         for item in items:
+            # Default to zero if either item.preparation_time or, item.quantity happen to be None.
+            preparation_time = item.preparation_time or 0
+            quantity = item.quantity or 0
 
-            total_item_time = item.preparation_time if item.parallel_preparation else item.preparation_time * item.quantity
+            total_item_time = preparation_time if item.parallel_preparation else preparation_time * quantity
 
             max_time = max(max_time, total_item_time)
         
